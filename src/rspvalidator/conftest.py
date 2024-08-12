@@ -42,12 +42,8 @@ def browser(playwright: Any) -> Generator:
     playwright.browser
         The playwright browser object.
     """
-    browser_launch_options = {
-        "args": ["--auto-open-devtools-for-tabs"],
-    }
-
     browser = playwright.chromium.launch(
-        headless=HEADLESS, **browser_launch_options
+        headless=HEADLESS,
     )
     yield browser
     browser.close()
