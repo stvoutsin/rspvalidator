@@ -17,7 +17,7 @@ __all__ = [
     "TAPValidationService",
     "SquareOneValidationService",
     "TaplintValidationService",
-    "BaseValidationService"
+    "BaseValidationService",
 ]
 
 
@@ -197,4 +197,4 @@ class TaplintValidationService:
         ), f"TAPLINT reported {error_count} errors, which exceeds the limit of 92"
 
         logger.info("Full output:")
-        logger.info(output)
+        logger.info(self.output)

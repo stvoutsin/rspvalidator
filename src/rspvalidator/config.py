@@ -61,6 +61,7 @@ urls = {
     "squareone": f"{BASE_URL}/",
     "tap": f"{BASE_URL}/api/tap",
     "ssotap": f"{BASE_URL}/api/ssotap",
+    "datalink": f"{BASE_URL}/api/datalink",
 }
 
 query_methods = {
