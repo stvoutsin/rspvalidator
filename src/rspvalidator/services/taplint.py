@@ -31,7 +31,7 @@ class TaplintService:
 
         Returns
         -------
-            Tuple[str, int]: A tuple containing the output string and exit status.
+            Tuple[str, int]: A tuple containing the output and exit status.
         """
         child = None
         command = f"java -jar {jar_path} taplint tapurl={tap_url}"
@@ -50,15 +50,22 @@ class TaplintService:
 
             return output, child.exitstatus  # noqa: TRY300
         except pexpect.TIMEOUT:
-            logger.exception(
-                f"Timeout occurred. Last output: {child.before.decode(errors='replace')}"
+            error_output = (
+                child.before.decode(errors="replace")
+                if child
+                else "No output available"
             )
+            logger.exception(f"Timeout occurred. Last output: {error_output}")
             return f"Timeout occurred after {timeout} seconds", -1
         except pexpect.EOF:
-            logger.exception(
-                f"EOF encountered. Last output: {child.before.decode(errors='replace')}"
+            error_output = (
+                child.before.decode(errors="replace")
+                if child
+                else "No output available"
             )
-            return "Process ended unexpectedly", child.exitstatus
+            logger.exception(f"EOF encountered. Last output: {error_output}")
+            exitstatus = child.exitstatus if child else -1
+            return "Process ended unexpectedly", exitstatus
         except Exception as e:
             logger.exception(f"An error occurred: {e!s}")
             return f"Error: {e!s}", -1

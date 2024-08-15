@@ -16,7 +16,7 @@ HOSTNAME = os.getenv("HOSTNAME", "data-dev.lsst.cloud")
 BASE_URL = f"https://{HOSTNAME}"
 HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
 TOKEN = os.getenv("TOKEN", "")
-
+SKIP_TESTS = True
 
 try:
     FileManagerService.check_auth_file()

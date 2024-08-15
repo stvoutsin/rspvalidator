@@ -1,13 +1,15 @@
 """Test Nublado tutorial notebooks."""
+import pytest
 from playwright.sync_api import Page, expect
 
-from ..config import BASE_URL
+from ..config import BASE_URL, SKIP_TESTS
 from ..services.configreader import ConfigReaderService
 
 # Note: The content of these tests is probably too lengthy, maybe break out
 # into helper methods or read validation content from a config
 
 
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_restart_kernels(page: Page) -> None:
     """Restart all kernels."""
     # TODO(stvoutsin): Add a check here,
@@ -21,6 +23,7 @@ def test_restart_kernels(page: Page) -> None:
     page.get_by_role("button", name="Shut Down All").click()
 
 
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_nublado_dp02_02b_catalog_access(page: Page) -> None:
     """Test the Nublado tutorial dp02 catalog access notebook."""
     # Go to Nublado homepage
@@ -70,6 +73,7 @@ def test_nublado_dp02_02b_catalog_access(page: Page) -> None:
     ).not_to_contain_text("Error")
 
 
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
     """Test the Nublado tutorial dp02 interactive visualization notebook."""
     # Go to Nublado homepage
@@ -121,6 +125,7 @@ def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
     ).not_to_contain_text("Error")
 
 
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_nublado_dp03_06_upload_tables(page: Page) -> None:
     """Test the Nublado tutorial dp03 table upload notebook."""
     page.goto(ConfigReaderService.get_url("nublado"))

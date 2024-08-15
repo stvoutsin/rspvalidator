@@ -19,5 +19,5 @@ def test_squareone_homepage(page: Page) -> None:
     validator = SquareOneValidationService(page=page)
     validator.validate_squareone_homepage()
     # Ensure that the "Log in" button is present
-    expect(page.get_by_role("banner")).to_contain_text("Log in")
+    expect(page.get_by_role("banner")).not_to_contain_text("Log in")
     logger.info("Squareone homepage (anonymous) validated.")

@@ -106,9 +106,9 @@ def test_tap_queries(
     app = scenario.app.value.lower()
     client = request.getfixturevalue("tap_client_" + app)
     results_all_users = Runner.run_concurrent_test(
-        TAPQueryRunnerService.run_query_test,
-        ConfigReaderService().get_queries(data_dir=data_dir, app=app),
-        scenario.users,
+        test_function=TAPQueryRunnerService.run_query_test,
+        test_data=ConfigReaderService().get_queries(data_dir=data_dir, app=app),
+        user_count=scenario.users,
         client=client,
         mode=scenario.mode,
     )

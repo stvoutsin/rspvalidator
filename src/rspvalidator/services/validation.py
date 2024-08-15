@@ -164,15 +164,16 @@ class TaplintValidationService:
     Rubin Science Platform's tap & ssotap apps using taplint.
     """
 
-    def __init__(self, app: str) -> None:
+    def __init__(self, app: str, output: str) -> None:
         self._max_errors = taplint_maximums[app]["errors"]
         self._max_warnings = taplint_maximums[app]["warnings"]
+        self.output = output
 
     def validate(self) -> None:
         """Validate the Rubin Science Platform's squareone app."""
         self.validate_summary()
 
-    def validate_summary(self, output: str) -> None:
+    def validate_summary(self) -> None:
         """Validate an RSP Taplint run.
 
         Parameters
@@ -181,7 +182,9 @@ class TaplintValidationService:
             The output of the Taplint run.
 
         """
-        error_count, warning_count = TaplintParserService.parse_summary(output)
+        error_count, warning_count = TaplintParserService.parse_summary(
+            self.output
+        )
 
         assert error_count is not None, "Failed to parse TAPLINT summary"
 

@@ -27,7 +27,7 @@ def test_stilts_taplint_sso(stilts_jar: Path) -> None:
         exit_status == 0
     ), f"STILTS TAPLINT failed with exit status {exit_status}"
 
-    TaplintValidationService("ssotap").validate_summary(stdout)
+    TaplintValidationService(app="ssotap", output=stdout).validate_summary()
 
 
 def test_stilts_taplint_tap(stilts_jar: Path) -> None:
@@ -51,4 +51,4 @@ def test_stilts_taplint_tap(stilts_jar: Path) -> None:
         exit_status == 0
     ), f"STILTS TAPLINT failed with exit status {exit_status}"
 
-    TaplintValidationService("tap").validate_summary(stdout)
+    TaplintValidationService(app="tap", output=stdout).validate_summary()
