@@ -184,6 +184,7 @@ def test_nublado_dp03_06_upload_tables(page: Page) -> None:
     ).not_to_contain_text("Error")
 
 
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_nublado_dp02_13a_image_cutout(page: Page) -> None:
     """Test the Nublado tutorial dp02 Image Cutout demo notebook."""
     # Go to Nublado page

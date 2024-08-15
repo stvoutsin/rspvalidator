@@ -95,7 +95,7 @@ def test_query_dp02_obscore(page: Page) -> None:
 
     # Check Datalink exists
     expect(page.get_by_role("grid")).to_contain_text(
-        "https://data-dev.lsst.cloud/api/datalink/links?ID=butler",
+        f"{ConfigReaderService.get_url("datalink")}/links?ID=butler",
         timeout=120000,
     )
 
