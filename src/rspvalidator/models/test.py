@@ -1,4 +1,5 @@
 """Module to define the Test related models."""
+
 from dataclasses import dataclass, field
 
 from .tap import QueryMode, TAPApplication

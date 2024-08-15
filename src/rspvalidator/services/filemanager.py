@@ -1,4 +1,5 @@
 """Provide utility methods for configuration files."""
+
 from pathlib import Path
 
 import requests
@@ -55,9 +56,7 @@ class FileManagerService:
             if file_path.stat().st_size >= min_size_bytes:
                 return True
             else:
-                raise FileSizeError(
-                    f"File {file_path} is smaller than expected."
-                )
+                raise FileSizeError(f"File {file_path} is smaller than expected.")
         return False
 
     @staticmethod

@@ -1,4 +1,5 @@
 """Module with TAP related models."""
+
 from dataclasses import dataclass
 from enum import Enum
 

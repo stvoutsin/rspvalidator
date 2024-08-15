@@ -1,4 +1,5 @@
 """Test Nublado tutorial notebooks."""
+
 import pytest
 from playwright.sync_api import Page, expect
 
@@ -17,9 +18,7 @@ def test_restart_kernels(page: Page) -> None:
     # Go to Nublado homepage
     page.goto(ConfigReaderService.get_url("nublado"))
     page.get_by_text("Kernel", exact=True).click(timeout=100000)
-    page.locator("#jp-mainmenu-kernel").get_by_text(
-        "Shut Down All Kernels…"
-    ).click()
+    page.locator("#jp-mainmenu-kernel").get_by_text("Shut Down All Kernels…").click()
     page.get_by_role("button", name="Shut Down All").click()
 
 
@@ -40,36 +39,34 @@ def test_nublado_dp02_02b_catalog_access(page: Page) -> None:
     page.get_by_placeholder("/path/relative/to/jlab/root").press("Enter")
 
     # Wait for tab to load
-    # expect(page.get_by_text("Description: Execute complex")).to_be_visible()
+    # Add check here
 
     # Run notebook
     page.get_by_text("Run", exact=True).click()
-    page.locator("#jp-mainmenu-run").get_by_text(
-        "Run All Cells", exact=True
-    ).click()
+    page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
 
     # Validate some of the expected output
     expect(
-        page.get_by_label(
-            "DP02_02b_Catalog_Queries_with_TAP.ipynb"
-        ).get_by_label("Cells", exact=True)
+        page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
+            "Cells", exact=True
+        )
     ).to_contain_text("383 unique objects returned", timeout=1000000)
     expect(
-        page.get_by_label(
-            "DP02_02b_Catalog_Queries_with_TAP.ipynb"
-        ).get_by_label("Cells", exact=True)
+        page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
+            "Cells", exact=True
+        )
     ).to_contain_text("1343", timeout=1000000)
 
     # Check that there are no errors
     expect(
-        page.get_by_label(
-            "DP02_02b_Catalog_Queries_with_TAP.ipynb"
-        ).get_by_label("Cells", exact=True)
+        page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
+            "Cells", exact=True
+        )
     ).not_to_contain_text("Traceback", timeout=1000000)
     expect(
-        page.get_by_label(
-            "DP02_02b_Catalog_Queries_with_TAP.ipynb"
-        ).get_by_label("Cells", exact=True)
+        page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
+            "Cells", exact=True
+        )
     ).not_to_contain_text("Error")
 
 
@@ -94,9 +91,7 @@ def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
 
     # Run notebook
     page.get_by_text("Run", exact=True).click()
-    page.locator("#jp-mainmenu-run").get_by_text(
-        "Run All Cells", exact=True
-    ).click()
+    page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
 
     # Validate some of the expected output
     expect(
@@ -145,9 +140,7 @@ def test_nublado_dp03_06_upload_tables(page: Page) -> None:
 
     # Run notebook
     page.get_by_text("Run", exact=True).click()
-    page.locator("#jp-mainmenu-run").get_by_text(
-        "Run All Cells", exact=True
-    ).click()
+    page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
 
     # Validate some of the expected output
     expect(
@@ -206,9 +199,7 @@ def test_nublado_dp02_13a_image_cutout(page: Page) -> None:
     ).click()
 
     page.get_by_text("Run", exact=True).click()
-    page.locator("#jp-mainmenu-run").get_by_text(
-        "Run All Cells", exact=True
-    ).click()
+    page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
 
     # Validate some of the expected output
     expect(

@@ -1,4 +1,5 @@
 """TAP service module."""
+
 from typing import Any
 
 import pyvo

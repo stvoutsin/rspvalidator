@@ -1,4 +1,5 @@
 """Validators used to assert the expected behavior of the Rubin Science Platform."""
+
 import time
 from abc import ABC, abstractmethod
 from pathlib import Path
@@ -151,9 +152,7 @@ class SquareOneValidationService:
         """Validate the RSP (squareone) homepage."""
         self.page.goto(ConfigReaderService.get_url("squareone"))
         self.page.goto(BASE_URL)
-        expect(self.page.locator("h1")).to_contain_text(
-            "Rubin Science Platform"
-        )
+        expect(self.page.locator("h1")).to_contain_text("Rubin Science Platform")
         expect(self.page.locator("section")).to_contain_text("Portal")
         expect(self.page.locator("section")).to_contain_text("Notebooks")
         expect(self.page.locator("section")).to_contain_text("APIs")
@@ -175,15 +174,12 @@ class TaplintValidationService:
 
     def validate_summary(self) -> None:
         """Validate an RSP Taplint run."""
-        error_count, warning_count = TaplintParserService.parse_summary(
-            self.output
-        )
+        error_count, warning_count = TaplintParserService.parse_summary(self.output)
 
         assert error_count is not None, "Failed to parse TAPLINT summary"
 
         assert error_count <= self._max_errors, (
-            f"TAPLINT reported {error_count} errors, which exceeds the limit "
-            f"of 92"
+            f"TAPLINT reported {error_count} errors, which exceeds the limit " f"of 92"
         )
 
         assert warning_count <= self._max_warnings, (

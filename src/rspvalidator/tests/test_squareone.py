@@ -1,4 +1,5 @@
 """Test the Squareone homepage."""
+
 from playwright.sync_api import Page, expect
 
 from ..config import logger

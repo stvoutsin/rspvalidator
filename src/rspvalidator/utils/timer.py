@@ -1,4 +1,5 @@
 """Measure the execution time of a function when called."""
+
 import time
 from collections.abc import Callable
 from typing import Any
@@ -6,9 +7,7 @@ from typing import Any
 __all__ = ["timer"]
 
 
-def timer(
-    func: Callable, *args: Any, **kwargs: Any  # noqa: ANN003, ANN002
-) -> tuple[Any, float]:
+def timer(func: Callable, *args: Any, **kwargs: Any) -> tuple[Any, float]:
     """
     Measure the execution time of a function when called.
 

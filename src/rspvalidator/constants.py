@@ -1,4 +1,5 @@
 """Define constants for the RSP UI Validator."""
+
 TAP_APPLICATION = "tap"
 SSOTAP_APPLICATION = "ssotap"
 TAP_SCHEMA_QUERY = "SELECT TOP 1 * FROM TAP_SCHEMA.tables"
