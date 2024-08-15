@@ -174,27 +174,22 @@ class TaplintValidationService:
         self.validate_summary()
 
     def validate_summary(self) -> None:
-        """Validate an RSP Taplint run.
-
-        Parameters
-        ----------
-        output
-            The output of the Taplint run.
-
-        """
+        """Validate an RSP Taplint run."""
         error_count, warning_count = TaplintParserService.parse_summary(
             self.output
         )
 
         assert error_count is not None, "Failed to parse TAPLINT summary"
 
-        assert (
-            error_count <= self._max_errors
-        ), f"TAPLINT reported {error_count} errors, which exceeds the limit of 92"
+        assert error_count <= self._max_errors, (
+            f"TAPLINT reported {error_count} errors, which exceeds the limit "
+            f"of 92"
+        )
 
-        assert (
-            warning_count <= self._max_warnings
-        ), f"TAPLINT reported {error_count} errors, which exceeds the limit of 92"
+        assert warning_count <= self._max_warnings, (
+            f"TAPLINT reported {warning_count} warnings, which exceeds the "
+            f"limitf 92"
+        )
 
         logger.info("Full output:")
         logger.info(self.output)

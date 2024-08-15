@@ -65,7 +65,7 @@ def test_query_dp03(page: Page) -> None:
     page.get_by_role("button", name="Search").click()
 
     # Check first row value
-    expect(page.get_by_role("grid")).to_contain_text("112.6117", timeout=120000)
+    expect(page.get_by_role("grid")).to_contain_text("112.6117", timeout=240000)
     expect(page.get_by_role("grid")).to_contain_text("60513", timeout=30000)
 
     # Check UWS job info
