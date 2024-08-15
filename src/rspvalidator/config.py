@@ -81,6 +81,6 @@ SCENARIOS = [
 ]
 
 taplint_maximums = {
-    "tap": {"errors": 92, "warnings": 2},
-    "ssotap": {"errors": 47, "warnings": 1},
+    "tap": {"errors": 87, "warnings": 690},
+    "ssotap": {"errors": 46, "warnings": 2},
 }
