@@ -1,0 +1,24 @@
+# -*- conf-mode -*-
+#
+# Editable runtime dependencies (equivalent to install_requires)
+# Add direct runtime dependencies here, as well as implicit dependencies
+# with constrained versions.
+#
+# After editing, update requirements/main.txt by running:
+#     make update-deps
+
+playwright~=1.45.0
+pytest
+pytest-asyncio
+requests
+lxml
+pyvo
+jinja2>=2.10
+structlog
+pytest-playwright
+pexpect
+
+# Uncomment this, change the branch, comment out safir above, and run make
+# update-deps-no-hashes to test against an unreleased version of Safir.
+#safir-arq @ git+https://github.com/lsst-sqre/safir@main#subdirectory=safir-arq
+#safir[uws] @ git+https://github.com/lsst-sqre/safir@main#subdirectory=safir

@@ -1,0 +1,19 @@
+{
+    "queries": [
+        {
+            "query": "SELECT TOP 10 * FROM TAP_SCHEMA.tables",
+            "expected_duration": 5.0,
+            "expected_row_count": 10
+        },
+        {
+            "query": "SELECT TOP 100 * FROM dp02_dc2_catalogs.Object",
+            "expected_duration": 60.0,
+            "expected_row_count": 100
+        },
+        {
+            "query": "SELECT TOP 20 * FROM dp02_dc2_catalogs.TruthSummary",
+            "expected_duration": 60.0,
+            "expected_row_count": 20
+        }
+    ]
+}
