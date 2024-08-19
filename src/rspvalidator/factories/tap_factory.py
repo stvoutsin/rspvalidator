@@ -1,4 +1,5 @@
 """TAP Factory module. used to generate TAP related objects."""
+
 import pyvo
 import requests
 

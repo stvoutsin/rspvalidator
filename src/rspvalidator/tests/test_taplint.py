@@ -1,3 +1,5 @@
+"""TAPlint tests of the TAP Services."""
+
 from pathlib import Path
 
 from ..config import TOKEN
@@ -19,13 +21,9 @@ def test_stilts_taplint_sso(stilts_jar: Path) -> None:
     username = "x-oauth-token"
     password = TOKEN
 
-    stdout, exit_status = TaplintService.run(
-        stilts_jar, tap_url, username, password
-    )
+    stdout, exit_status = TaplintService.run(stilts_jar, tap_url, username, password)
 
-    assert (
-        exit_status == 0
-    ), f"STILTS TAPLINT failed with exit status {exit_status}"
+    assert exit_status == 0, f"STILTS TAPLINT failed with exit status {exit_status}"
 
     TaplintValidationService(app="ssotap", output=stdout).validate_summary()
 
@@ -43,12 +41,8 @@ def test_stilts_taplint_tap(stilts_jar: Path) -> None:
     username = "x-oauth-token"
     password = TOKEN
 
-    stdout, exit_status = TaplintService.run(
-        stilts_jar, tap_url, username, password
-    )
+    stdout, exit_status = TaplintService.run(stilts_jar, tap_url, username, password)
 
-    assert (
-        exit_status == 0
-    ), f"STILTS TAPLINT failed with exit status {exit_status}"
+    assert exit_status == 0, f"STILTS TAPLINT failed with exit status {exit_status}"
 
     TaplintValidationService(app="tap", output=stdout).validate_summary()

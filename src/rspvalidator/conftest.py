@@ -1,4 +1,5 @@
 """Conftest module for the tests."""
+
 from pathlib import Path
 from typing import Any, Generator  # noqa: UP035
 
@@ -65,9 +66,7 @@ def auth_token() -> str:
         RuntimeError: If the environment variable for the token is not set.
     """
     if not TOKEN:
-        raise RuntimeError(
-            "Authentication token not found in environment variables."
-        )
+        raise RuntimeError("Authentication token not found in environment variables.")
     return TOKEN
 
 
@@ -241,4 +240,4 @@ def stilts_jar() -> Generator:
     url = STILTS_URL
     file_path = Path(STILTS_FILENAME)
     FileManagerService.download_file(url, file_path)
-    yield file_path
+    return file_path

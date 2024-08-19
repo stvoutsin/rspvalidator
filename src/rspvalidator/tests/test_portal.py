@@ -1,4 +1,5 @@
 """Test the portal page."""
+
 import re
 
 from playwright.sync_api import Page, expect
@@ -19,17 +20,14 @@ def test_query_dp02(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM dp02_dc2_catalogs.TruthSummary ORDER BY "
-        "id ASC"
+        "SELECT TOP 1000 * FROM dp02_dc2_catalogs.TruthSummary ORDER BY " "id ASC"
     )
 
     # Run query
     page.get_by_role("button", name="Search").click()
 
     # Validate results
-    expect(page.get_by_role("grid")).to_contain_text(
-        "100666820", timeout=180000
-    )
+    expect(page.get_by_role("grid")).to_contain_text("100666820", timeout=180000)
 
     expect(page.get_by_role("grid")).to_contain_text("928.069")
 
@@ -40,9 +38,7 @@ def test_query_dp02(page: Page) -> None:
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text(
-        "COMPLETED", timeout=60000
-    )
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)
 
 
 def test_query_dp03(page: Page) -> None:
@@ -57,8 +53,7 @@ def test_query_dp03(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject ORDER BY "
-        "ssObjectId"
+        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject ORDER BY " "ssObjectId"
     )
 
     # Run query
@@ -70,9 +65,7 @@ def test_query_dp03(page: Page) -> None:
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text(
-        "COMPLETED", timeout=60000
-    )
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)
 
 
 def test_query_dp02_obscore(page: Page) -> None:
@@ -101,6 +94,4 @@ def test_query_dp02_obscore(page: Page) -> None:
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text(
-        "COMPLETED", timeout=60000
-    )
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)

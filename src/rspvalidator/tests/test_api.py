@@ -1,4 +1,5 @@
 """Tests for the TAP API."""
+
 from typing import Any
 
 import pytest
@@ -149,9 +150,7 @@ def test_tap_get_tables_tap(
     tap_validation_service_tap: TAPValidationService,
 ) -> None:
     """Test the TAP tables endpoint."""
-    tap_validation_service = TAPValidationService(
-        tap_client=tap_client_tap, app="tap"
-    )
+    tap_validation_service = TAPValidationService(tap_client=tap_client_tap, app="tap")
     tap_validation_service.validate_tables()
 
 
@@ -171,9 +170,7 @@ def test_tap_uws_endpoint_tap(
     tap_validation_service_tap: TAPValidationService,
 ) -> None:
     """Test the TAP UWS endpoint."""
-    tap_validation_service = TAPValidationService(
-        tap_client=tap_client_tap, app="tap"
-    )
+    tap_validation_service = TAPValidationService(tap_client=tap_client_tap, app="tap")
     tap_validation_service.validate_uws_endpoint()
 
 

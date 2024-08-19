@@ -1,4 +1,5 @@
 """Config file."""
+
 import os
 import sys
 
@@ -34,19 +35,15 @@ if not TOKEN:
 
 capability_includes = {
     "tap": {
-        "include_upload": os.getenv("TAP_INCLUDE_UPLOAD", "False").lower()
-        == "true",
+        "include_upload": os.getenv("TAP_INCLUDE_UPLOAD", "False").lower() == "true",
         "include_datamodel": os.getenv("TAP_INCLUDE_DATAMODEL", "True").lower()
         == "true",
         "include_geometry": os.getenv("TAP_INCLUDE_GEOMETRY", "False").lower()
         == "true",
     },
     "ssotap": {
-        "include_upload": os.getenv("SSOTAP_INCLUDE_UPLOAD", "True").lower()
-        == "true",
-        "include_datamodel": os.getenv(
-            "SSOTAP_INCLUDE_DATAMODEL", "False"
-        ).lower()
+        "include_upload": os.getenv("SSOTAP_INCLUDE_UPLOAD", "True").lower() == "true",
+        "include_datamodel": os.getenv("SSOTAP_INCLUDE_DATAMODEL", "False").lower()
         == "true",
         "include_geometry": os.getenv("SSOTAP_INCLUDE_GEOMETRY", "True").lower()
         == "true",

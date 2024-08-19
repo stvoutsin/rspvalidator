@@ -1,7 +1,8 @@
 """Runner service module, used for running tests concurrently."""
+
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Any, List
+from typing import Any
 
 from ..models.tap import QueryResult
 
@@ -53,13 +54,8 @@ class Runner:
                 A list of results from the test function calls
 
             """
-            return [
-                test_function(client, data, mode, **kwargs)
-                for data in test_data
-            ]
+            return [test_function(client, data, mode, **kwargs) for data in test_data]
 
         with ThreadPoolExecutor(max_workers=user_count) as executor:
-            futures = [
-                executor.submit(_run_user_tests) for _ in range(user_count)
-            ]
+            futures = [executor.submit(_run_user_tests) for _ in range(user_count)]
             return [future.result() for future in as_completed(futures)]
