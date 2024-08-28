@@ -179,12 +179,13 @@ class TaplintValidationService:
         assert error_count is not None, "Failed to parse TAPLINT summary"
 
         assert error_count <= self._max_errors, (
-            f"TAPLINT reported {error_count} errors, which exceeds the limit " f"of 92"
+            f"TAPLINT reported {error_count} errors, which exceeds the limit "
+            f"of {self._max_errors}"
         )
 
         assert warning_count <= self._max_warnings, (
             f"TAPLINT reported {warning_count} warnings, which exceeds the "
-            f"limitf 92"
+            f"limit of {self._max_warnings}"
         )
 
         logger.info("Full output:")

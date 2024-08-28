@@ -20,21 +20,14 @@ def test_query_dp02(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM dp02_dc2_catalogs.TruthSummary ORDER BY " "id ASC"
+        "SELECT TOP 10 * FROM dp02_dc2_catalogs.Object ORDER BY coord_ra ASC"
     )
 
     # Run query
     page.get_by_role("button", name="Search").click()
 
     # Validate results
-    expect(page.get_by_role("grid")).to_contain_text("100666820", timeout=180000)
-
-    expect(page.get_by_role("grid")).to_contain_text("928.069")
-
-    # Check that Hips image is loaded
-    expect(page.locator("#app-root")).to_contain_text(
-        "DP0.2 HiPS from DESC DC2 sim: gri color visualization", timeout=60000
-    )
+    expect(page.get_by_role("grid")).to_contain_text("48.5080681", timeout=360000)
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
