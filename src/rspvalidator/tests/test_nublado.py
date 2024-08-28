@@ -1,5 +1,7 @@
 """Test Nublado tutorial notebooks."""
 
+import time
+
 import pytest
 from playwright.sync_api import Page, expect
 
@@ -39,7 +41,15 @@ def test_nublado_dp02_02b_catalog_access(page: Page) -> None:
     page.get_by_placeholder("/path/relative/to/jlab/root").press("Enter")
 
     # Wait for tab to load
-    # Add check here
+    expect(
+        page.get_by_text(
+            "Description: Execute complex ADQL queries with the TAP service."
+        )
+    ).to_be_visible(timeout=1000000)
+
+    # This is a hack, need to figure out why run is started before things
+    # are loaded
+    time.sleep(5)
 
     # Run notebook
     page.get_by_text("Run", exact=True).click()
@@ -50,12 +60,12 @@ def test_nublado_dp02_02b_catalog_access(page: Page) -> None:
         page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
             "Cells", exact=True
         )
-    ).to_contain_text("383 unique objects returned", timeout=1000000)
+    ).to_contain_text("173 rows", timeout=1000000)
     expect(
         page.get_by_label("DP02_02b_Catalog_Queries_with_TAP.ipynb").get_by_label(
             "Cells", exact=True
         )
-    ).to_contain_text("1343", timeout=1000000)
+    ).to_contain_text("1651589610221899038", timeout=1000000)
 
     # Check that there are no errors
     expect(
@@ -89,6 +99,10 @@ def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
     # Ensures that tab is loaded before running
     expect(page.get_by_text("Description: Interactive")).to_be_visible()
 
+    # This is a hack, need to figure out why run is started before things
+    # are loaded
+    time.sleep(5)
+
     # Run notebook
     page.get_by_text("Run", exact=True).click()
     page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
@@ -98,7 +112,7 @@ def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
         page.get_by_label(
             "DP02_06b_Interactive_Catalog_Visualization.ipynb"
         ).get_by_label("Cells", exact=True)
-    ).to_contain_text("BokehJS 3.4.1 successfully loaded.", timeout=1000000)
+    ).to_contain_text("BokehJS 3.4.2 successfully loaded.", timeout=1000000)
 
     expect(
         page.get_by_label(
@@ -136,10 +150,14 @@ def test_nublado_dp03_06_upload_tables(page: Page) -> None:
     page.get_by_placeholder("/path/relative/to/jlab/root").press("Enter")
 
     # Ensures that tab is loaded before running
-    page.get_by_text("Description: Use the TAP").click()
+    page.get_by_text("Description: Use the TAP").click(timeout=1000000)
+
+    # This is a hack, need to figure out why run is started before things
+    # are loaded
+    time.sleep(5)
 
     # Run notebook
-    page.get_by_text("Run", exact=True).click()
+    page.get_by_text("Run", exact=True).click(timeout=1000000)
     page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
 
     # Validate some of the expected output
@@ -197,6 +215,10 @@ def test_nublado_dp02_13a_image_cutout(page: Page) -> None:
     page.get_by_label("DP02_13a_Image_Cutout_SciDemo.ipynb").get_by_role(
         "heading", name="Using the image cutout tool"
     ).click()
+
+    # This is a hack, need to figure out why run is started before things
+    # are loaded
+    time.sleep(5)
 
     page.get_by_text("Run", exact=True).click()
     page.locator("#jp-mainmenu-run").get_by_text("Run All Cells", exact=True).click()
