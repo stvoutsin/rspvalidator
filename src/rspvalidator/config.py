@@ -12,7 +12,7 @@ from .services.filemanager import FileManagerService
 
 logger = structlog.get_logger()
 
-# Load environment variables
+# Test Configuration values
 HOSTNAME = os.getenv("HOSTNAME", "data-dev.lsst.cloud")
 BASE_URL = f"https://{HOSTNAME}"
 HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
@@ -26,6 +26,7 @@ except FileNotFoundError as e:
     logger.exception("Auth file not found", exc_info=e)
     sys.exit(1)
 
+# Check env variables
 if not HOSTNAME:
     logger.error("HOSTNAME environment variable is not set.")
     raise ValueError("HOSTNAME environment variable is not set.")
@@ -34,6 +35,7 @@ if not TOKEN:
     logger.error("TOKEN environment variable is not set.")
     raise ValueError("TOKEN environment variable is not set.")
 
+# Capability configuration per TAP app
 capability_includes = {
     "tap": {
         "include_upload": os.getenv("TAP_INCLUDE_UPLOAD", "False").lower() == "true",
@@ -62,11 +64,13 @@ urls = {
     "datalink": f"{BASE_URL}/api/datalink",
 }
 
+# Mapping of QueryMode to pyvo query methods
 query_methods = {
     QueryMode.SYNC: pyvo.dal.TAPService.run_sync,
     QueryMode.ASYNC: pyvo.dal.TAPService.run_async,
 }
 
+# Test scenarios for TAP queries
 SCENARIOS = [
     TestScenario(TAPApplication.SSOTAP, QueryMode.SYNC, 5),
     TestScenario(TAPApplication.SSOTAP, QueryMode.SYNC, 10),
@@ -78,6 +82,7 @@ SCENARIOS = [
     TestScenario(TAPApplication.TAP, QueryMode.ASYNC, 10),
 ]
 
+# Maximum number of errors and warnings for taplint
 taplint_maximums = {
     "tap": {"errors": 92, "warnings": 690},
     "ssotap": {"errors": 47, "warnings": 2},
