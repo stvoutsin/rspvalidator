@@ -27,11 +27,11 @@ def test_query_dp02(page: Page) -> None:
     page.get_by_role("button", name="Search").click()
 
     # Validate results
-    expect(page.get_by_role("grid")).to_contain_text("48.5080681", timeout=360000)
+    expect(page.get_by_role("grid")).to_contain_text("48.5080681")
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED")
 
 
 def test_query_dp03(page: Page) -> None:
@@ -46,19 +46,19 @@ def test_query_dp03(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject ORDER BY " "ssObjectId"
+        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject " "ORDER BY ssObjectId"
     )
 
     # Run query
     page.get_by_role("button", name="Search").click()
 
     # Check first row value
-    expect(page.get_by_role("grid")).to_contain_text("112.6117", timeout=240000)
-    expect(page.get_by_role("grid")).to_contain_text("60513", timeout=30000)
+    expect(page.get_by_role("grid")).to_contain_text("112.6117")
+    expect(page.get_by_role("grid")).to_contain_text("60513")
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED")
 
 
 def test_query_dp02_obscore(page: Page) -> None:
@@ -81,10 +81,9 @@ def test_query_dp02_obscore(page: Page) -> None:
 
     # Check Datalink exists
     expect(page.get_by_role("grid")).to_contain_text(
-        f"{ConfigReaderService.get_url('datalink')}/links?ID=butler",
-        timeout=120000,
+        f"{ConfigReaderService.get_url('datalink')}/links?ID=butler"
     )
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
-    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED", timeout=60000)
+    expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED")
