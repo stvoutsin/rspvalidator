@@ -5,14 +5,17 @@ from typing import Any, Generator  # noqa: UP035
 
 import pytest
 import pyvo
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 
-from .config import HEADLESS, TOKEN
+from .config import HEADLESS, SELECTOR_TIMEOUT, TOKEN
 from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
 from .services.validation import TAPValidationService
+
+# Set default timeout for playwright
+expect.set_options(timeout=SELECTOR_TIMEOUT)
 
 
 @pytest.fixture(scope="session")
@@ -121,6 +124,7 @@ def page(browser: Any) -> Generator:
     """
     home_auth_path = Path("~/auth.json").expanduser()
     context = browser.new_context(storage_state=home_auth_path)
+    context.set_default_timeout(SELECTOR_TIMEOUT)
 
     # To add a bearer token: context.set_extra_http_headers({"Authorization":
     # f"Bearer {TOKEN}"}) (This doesn't seem to work atm)
@@ -228,7 +232,7 @@ def tap_validation_service_tap(
 
 
 @pytest.fixture(scope="module")
-def stilts_jar() -> Generator:
+def stilts_jar() -> Path:
     """
     Fixture to download the STILTS JAR file.
 

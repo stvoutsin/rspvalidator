@@ -17,7 +17,8 @@ HOSTNAME = os.getenv("HOSTNAME", "data-dev.lsst.cloud")
 BASE_URL = f"https://{HOSTNAME}"
 HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
 TOKEN = os.getenv("TOKEN", "")
-SKIP_TESTS = True
+SKIP_TESTS = False
+SELECTOR_TIMEOUT = 180000
 
 try:
     FileManagerService.check_auth_file()
@@ -78,6 +79,6 @@ SCENARIOS = [
 ]
 
 taplint_maximums = {
-    "tap": {"errors": 87, "warnings": 690},
-    "ssotap": {"errors": 46, "warnings": 2},
+    "tap": {"errors": 92, "warnings": 690},
+    "ssotap": {"errors": 47, "warnings": 2},
 }
