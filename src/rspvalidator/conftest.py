@@ -1,5 +1,6 @@
 """Conftest module for the tests."""
 
+import datetime
 from pathlib import Path
 from typing import Any, Generator  # noqa: UP035
 
@@ -7,7 +8,7 @@ import pytest
 import pyvo
 from playwright.sync_api import expect, sync_playwright
 
-from .config import HEADLESS, SELECTOR_TIMEOUT, TOKEN
+from .config import HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
 from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
@@ -126,13 +127,19 @@ def page(browser: Any) -> Generator:
     context = browser.new_context(storage_state=home_auth_path)
     context.set_default_timeout(SELECTOR_TIMEOUT)
 
+    if TRACING:
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     # To add a bearer token: context.set_extra_http_headers({"Authorization":
     # f"Bearer {TOKEN}"}) (This doesn't seem to work atm)
     page = context.new_page()
-
     yield page
-    page.close()
 
+    if TRACING:
+        timestamp = datetime.datetime.now(datetime.UTC).strftime("%Y%m%d_%H%M%S")
+        context.tracing.stop(path=f"{timestamp}-trace.zip")
+
+    page.close()
     context.close()
 
 

@@ -19,6 +19,7 @@ HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
 TOKEN = os.getenv("TOKEN", "")
 SKIP_TESTS = False
 SELECTOR_TIMEOUT = 180000
+TRACING = False
 
 try:
     FileManagerService.check_auth_file()
