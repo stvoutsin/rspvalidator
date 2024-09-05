@@ -249,6 +249,8 @@ def stilts_jar() -> Path:
         The path to the STILS JAR file.
     """
     url = STILTS_URL
-    file_path = Path(STILTS_FILENAME)
+    current_dir = Path(__file__).parent
+    file_path = current_dir / STILTS_FILENAME
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     FileManagerService.download_file(url, file_path)
     return file_path

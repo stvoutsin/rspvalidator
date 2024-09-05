@@ -100,7 +100,7 @@ def test_tap_queries(
     concurrent users.
 
     This test fetches SQL queries from a JSON file, executes each query
-    using a TAP sync query endpoint concurrently with a specified number of
+    using a TAP sync query concurrently with a specified number of
     users, and checks if the execution time < 2 * expected duration and if
     the row count matches the expected row count.
     """
