@@ -9,7 +9,7 @@ import pyvo
 from playwright.sync_api import expect, sync_playwright
 
 from .config import HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
-from .constants import STILTS_FILENAME, STILTS_URL
+from .constants import AUTH_FILE, STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
@@ -123,7 +123,7 @@ def page(browser: Any) -> Generator:
     playwright.page
         The Playwright page object.
     """
-    home_auth_path = Path("~/auth.json").expanduser()
+    home_auth_path = Path(AUTH_FILE).expanduser()
     context = browser.new_context(storage_state=home_auth_path)
     context.set_default_timeout(SELECTOR_TIMEOUT)
 

@@ -46,7 +46,7 @@ def test_query_dp03(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject " "ORDER BY ssObjectId"
+        "SELECT TOP 1000 * FROM dp03_catalogs_10yr.SSObject ORDER BY ssObjectId"
     )
 
     # Run query
