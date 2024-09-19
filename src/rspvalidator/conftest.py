@@ -8,8 +8,8 @@ import pytest
 import pyvo
 from playwright.sync_api import expect, sync_playwright
 
-from .config import HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
-from .constants import AUTH_FILE, STILTS_FILENAME, STILTS_URL
+from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
+from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
