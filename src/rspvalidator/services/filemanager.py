@@ -27,13 +27,14 @@ class FileManagerService:
         FileNotFoundError
             If the auth.json file is not found in the user's home directory.
         """
-        home_dir = Path.home()
-        auth_file_path = home_dir / "auth.json"
+        from ..config import AUTH_FILE
+
+        auth_file_path = Path(AUTH_FILE).expanduser().resolve()
 
         if not auth_file_path.exists():
             raise FileNotFoundError(
                 f"Error: The file 'auth.json' was not found "
-                f"in the home directory: {home_dir}"
+                f"in the home directory: {auth_file_path!s}"
             )
 
     @staticmethod
