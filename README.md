@@ -41,9 +41,11 @@ Set the following environment variables as needed:
 This library uses an auth.json configuration file that stores the cookies needed to access the protected RSP pages.
 To generate an auth.json file the first time is a bit of a hassle, but it can be done either manually or using playwright.
 To use playwright to generate it, run:
+
     ```sh
     playwright codegen  https://data-dev.lsst.cloud --save-storage=auth.json
     ```
+    
 Then point AUTH_FILE in config.py to the path of the auth.json file generated.
 
 ## Running Tests
