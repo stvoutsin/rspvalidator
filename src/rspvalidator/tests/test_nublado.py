@@ -13,10 +13,23 @@ from ..services.configreader import ConfigReaderService
 
 
 @pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
+def test_ensure_server_running(page: Page) -> None:
+    """Ensure that the Nublado server is running."""
+    page.goto(ConfigReaderService.get_url("nublado"))
+    server_options = page.get_by_role("heading", name="Server Options")
+    if server_options.is_visible():
+        page.get_by_role("heading", name="Server Options").click()
+        page.get_by_role("button", name="Start").click()
+        page.locator("#jp-MainLogo").get_by_text(">").click()
+        expect(page.locator("#jp-MainLogo").get_by_text(">")).to_be_visible()
+
+    else:
+        pass
+
+
+@pytest.mark.skipif(SKIP_TESTS, reason="Skipping test as per config flag")
 def test_restart_kernels(page: Page) -> None:
     """Restart all kernels."""
-    # TODO(stvoutsin): Add a check here,
-    #  if we get the image selection choose default
     # Go to Nublado homepage
     page.goto(ConfigReaderService.get_url("nublado"))
     page.get_by_text("Kernel", exact=True).click()
