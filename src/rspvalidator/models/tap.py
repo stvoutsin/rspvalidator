@@ -29,7 +29,7 @@ class QueryMode(Enum):
     SYNC : str
         TAP Synchronous query mode.
     ASYNC : str
-        TAPAsynchronous query mode.
+        TAP Asynchronous query mode.
     """
 
     SYNC = "sync"
