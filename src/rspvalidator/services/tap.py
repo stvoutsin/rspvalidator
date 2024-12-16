@@ -49,7 +49,7 @@ class TAPQueryRunnerService:
             if mode == QueryMode.SYNC
             else timer(client.run_async, sql_query)
         )
-        row_count: int = len(result.table)
+        row_count: int = len(result.to_table())
 
         return QueryResult(
             status=result.status[0],
