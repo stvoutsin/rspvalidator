@@ -20,14 +20,20 @@ def test_query_dp02(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 10 * FROM dp02_dc2_catalogs.Object ORDER BY coord_ra ASC"
+        """
+        SELECT *
+        FROM dp02_dc2_catalogs.Object
+        WHERE CONTAINS(POINT('ICRS', coord_ra, coord_dec),
+        CIRCLE('ICRS', 62, -37, 0.05)) = 1
+        ORDER BY coord_ra desc
+        """
     )
 
     # Run query
     page.get_by_role("button", name="Search").click()
 
     # Validate results
-    expect(page.get_by_role("grid")).to_contain_text("48.5080681")
+    expect(page.get_by_role("grid")).to_contain_text("62.0620699")
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()
