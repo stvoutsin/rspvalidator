@@ -4,11 +4,11 @@ from dataclasses import dataclass, field
 
 from .tap import QueryMode, TAPApplication
 
-__all__ = ["TestScenario"]
+__all__ = ["Scenario"]
 
 
 @dataclass
-class TestScenario:
+class Scenario:
     """
     Dataclass to store test configuration data.
 
