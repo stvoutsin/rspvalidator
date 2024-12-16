@@ -17,8 +17,7 @@ class TaplintService:
     def run(
         jar_path: Path, tap_url: str, username: str, password: str
     ) -> tuple[str, int]:
-        """
-        Run STILTS TAPLINT on a given TAP URL.
+        """Run STILTS TAPLINT on a given TAP URL.
 
         Parameters
         ----------
@@ -39,7 +38,9 @@ class TaplintService:
         command = f"java -jar {jar_path} taplint tapurl={tap_url}"
         timeout = 150000
         try:
-            child = pexpect.spawn(command, timeout=timeout)
+            child = pexpect.spawn(command, timeout=timeout, encoding="utf-8")
+
+            child.setwinsize(24, 80)
 
             child.expect("Username:", timeout=timeout)
             child.sendline(username)
@@ -47,10 +48,9 @@ class TaplintService:
             child.expect("Password:", timeout=timeout)
             child.sendline(password)
 
-            output = child.read().decode(errors="replace")
+            output = child.read()
             child.close()
 
-            return output, child.exitstatus  # noqa: TRY300
         except pexpect.TIMEOUT:
             error_output = (
                 child.before.decode(errors="replace")
@@ -71,6 +71,8 @@ class TaplintService:
         except Exception as e:
             logger.exception(f"An error occurred: {e!s}")
             return f"Error: {e!s}", -1
+        else:
+            return output, child.exitstatus
 
 
 class TaplintParserService:
