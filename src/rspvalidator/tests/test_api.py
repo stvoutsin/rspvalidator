@@ -7,7 +7,7 @@ import pyvo
 from playwright.sync_api import Page
 
 from ..config import SCENARIOS, capability_includes, logger
-from ..models.test import TestScenario
+from ..models.test import Scenario
 from ..services.configreader import ConfigReaderService
 from ..services.tap import TAPOperationsService, TAPQueryRunnerService
 from ..services.testrunner import Runner
@@ -92,7 +92,7 @@ def test_tap_capabilities_tap(
 @pytest.mark.parametrize("scenario", SCENARIOS, ids=lambda s: s.description)
 def test_tap_queries(
     request: Any,
-    scenario: TestScenario,
+    scenario: Scenario,
     data_dir: str,
 ) -> None:
     """

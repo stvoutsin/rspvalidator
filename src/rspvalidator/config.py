@@ -7,7 +7,7 @@ import pyvo
 import structlog
 
 from .models.tap import QueryMode, TAPApplication
-from .models.test import TestScenario
+from .models.test import Scenario
 from .services.filemanager import FileManagerService
 
 logger = structlog.get_logger()
@@ -74,14 +74,14 @@ query_methods = {
 
 # Test scenarios for TAP queries
 SCENARIOS = [
-    TestScenario(TAPApplication.SSOTAP, QueryMode.SYNC, 5),
-    TestScenario(TAPApplication.SSOTAP, QueryMode.SYNC, 10),
-    TestScenario(TAPApplication.SSOTAP, QueryMode.ASYNC, 1),
-    TestScenario(TAPApplication.SSOTAP, QueryMode.ASYNC, 10),
-    TestScenario(TAPApplication.TAP, QueryMode.SYNC, 1),
-    TestScenario(TAPApplication.TAP, QueryMode.SYNC, 10),
-    TestScenario(TAPApplication.TAP, QueryMode.ASYNC, 1),
-    TestScenario(TAPApplication.TAP, QueryMode.ASYNC, 10),
+    Scenario(TAPApplication.SSOTAP, QueryMode.SYNC, 5),
+    Scenario(TAPApplication.SSOTAP, QueryMode.SYNC, 10),
+    Scenario(TAPApplication.SSOTAP, QueryMode.ASYNC, 1),
+    Scenario(TAPApplication.SSOTAP, QueryMode.ASYNC, 10),
+    Scenario(TAPApplication.TAP, QueryMode.SYNC, 1),
+    Scenario(TAPApplication.TAP, QueryMode.SYNC, 10),
+    Scenario(TAPApplication.TAP, QueryMode.ASYNC, 1),
+    Scenario(TAPApplication.TAP, QueryMode.ASYNC, 10),
 ]
 
 # Maximum number of errors and warnings for taplint
