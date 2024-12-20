@@ -38,4 +38,4 @@ class TAPFactory:
         auth.add_security_method_for_url(tap_url + "/sync", "lsst-token")
         auth.add_security_method_for_url(tap_url + "/async", "lsst-token")
         auth.add_security_method_for_url(tap_url + "/tables", "lsst-token")
-        return pyvo.dal.TAPService(tap_url, auth)
+        return pyvo.dal.TAPService(baseurl=tap_url, session=auth)

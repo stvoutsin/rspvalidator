@@ -1,6 +1,8 @@
 """Test the portal page."""
 
 import re
+import time
+from collections.abc import Callable
 
 from playwright.sync_api import Page, expect
 
@@ -67,7 +69,7 @@ def test_query_dp03(page: Page) -> None:
     expect(page.locator("#dialogRootDiv")).to_contain_text("COMPLETED")
 
 
-def test_query_dp02_obscore(page: Page) -> None:
+def test_query_dp02_obscore(page: Page, assert_snapshot: Callable) -> None:
     """Test the portal with a dp02 obscore query."""
     # Go to Portal page
     page.goto(ConfigReaderService.get_url("portal"))
@@ -79,7 +81,7 @@ def test_query_dp02_obscore(page: Page) -> None:
     ).first.click()
     page.get_by_role("button", name="Edit ADQL", exact=True).click()
     page.locator("#adqlEditor").fill(
-        "SELECT TOP 1000 * FROM ivoa.ObsCore ORDER BY obs_id ASC"
+        "SELECT TOP 5 * FROM ivoa.ObsCore ORDER BY obs_id ASC"
     )
 
     # Run query
@@ -89,6 +91,10 @@ def test_query_dp02_obscore(page: Page) -> None:
     expect(page.get_by_role("grid")).to_contain_text(
         f"{ConfigReaderService.get_url('datalink')}/links?ID=butler"
     )
+
+    time.sleep(20)
+    # Take a screenshot and assert it is as expected
+    assert_snapshot(page.screenshot())
 
     # Check UWS job info
     page.get_by_role("button", name="Show additional table info").click()

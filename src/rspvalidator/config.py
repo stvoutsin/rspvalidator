@@ -16,8 +16,8 @@ logger = structlog.get_logger()
 HOSTNAME = os.getenv("HOSTNAME", "data-dev.lsst.cloud")
 BASE_URL = f"https://{HOSTNAME}"
 HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
+SNAPSHOTS = os.getenv("SNAPSHOTS", "False").lower() == "true"
 TOKEN = os.getenv("TOKEN", "")
-SKIP_TESTS = False
 SELECTOR_TIMEOUT = 180000
 TRACING = True
 AUTH_FILE = "~/auth.json"
