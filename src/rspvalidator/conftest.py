@@ -2,17 +2,18 @@
 
 import datetime
 from pathlib import Path
-from typing import Any, Generator  # noqa: UP035
+from typing import Any, Callable, Generator  # noqa: UP035
 
 import pytest
 import pyvo
 from playwright.sync_api import expect, sync_playwright
 
-from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
+from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, SNAPSHOTS, TOKEN, TRACING
 from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
+from .services.snapshots import SnapshotComparatorService
 from .services.validation import TAPValidationService
 
 # Set default timeout for playwright
@@ -254,3 +255,34 @@ def stilts_jar() -> Path:
     file_path.parent.mkdir(parents=True, exist_ok=True)
     FileManagerService.download_file(url, file_path)
     return file_path
+
+
+@pytest.fixture(scope="function")  # noqa: PT003
+def assert_snapshot(pytestconfig: Any, request: Any, browser_name: str) -> (
+        Callable):
+    """Assert that the current page matches the snapshot.
+
+    Parameters
+    ----------
+    pytestconfig
+        The pytestconfig object.
+    request
+        The request object.
+    browser_name
+        The name of the browser.
+
+    Returns
+    -------
+    Callable
+        The function to compare the images.
+
+    Credits
+    -------
+    This code is adopted and modified from:
+    https://pypi.org/project/pytest-playwright-visual/
+    """
+    if not SNAPSHOTS:
+        return lambda x: None
+    return SnapshotComparatorService.create_snapshot_fixture(
+        pytestconfig, request, browser_name
+    )
