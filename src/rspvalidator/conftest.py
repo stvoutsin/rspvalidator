@@ -258,18 +258,13 @@ def stilts_jar() -> Path:
 
 
 @pytest.fixture(scope="function")  # noqa: PT003
-def assert_snapshot(pytestconfig: Any, request: Any, browser_name: str) -> (
-        Callable):
+def assert_snapshot(request: Any) -> Callable:
     """Assert that the current page matches the snapshot.
 
     Parameters
     ----------
-    pytestconfig
-        The pytestconfig object.
     request
         The request object.
-    browser_name
-        The name of the browser.
 
     Returns
     -------
@@ -283,6 +278,4 @@ def assert_snapshot(pytestconfig: Any, request: Any, browser_name: str) -> (
     """
     if not SNAPSHOTS:
         return lambda x: None
-    return SnapshotComparatorService.create_snapshot_fixture(
-        pytestconfig, request, browser_name
-    )
+    return SnapshotComparatorService.create_snapshot_fixture(request)
