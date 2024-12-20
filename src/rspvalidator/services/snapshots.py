@@ -1,3 +1,5 @@
+"""Utility class for comparing visual snapshots in tests."""
+
 import shutil
 import sys
 from collections.abc import Callable
@@ -16,34 +18,28 @@ class SnapshotComparatorService:
     """Utility class for comparing visual snapshots in tests."""
 
     @staticmethod
-    def create_snapshot_fixture(pytestconfig: Any,
-                                request: Any,
-                                browser_name: str) -> Callable:
+    def create_snapshot_fixture(request: Any) -> Callable:
         """Create a fixture for snapshot comparison.
 
         Parameters
         ----------
-        pytestconfig : Any
-            The pytest configuration object
         request : Any
             The pytest request object
-        browser_name : str
-            Name of the browser being used
 
         Returns
         -------
         Callable
             A function to compare snapshots
         """
-        test_function_name = request.node.name.split('[')[0]
+        test_function_name = request.node.name.split("[")[0]
         test_name = f"{test_function_name}[{sys.platform!s}]"
 
         def compare(
-                img: bytes,
-                *,
-                threshold: float = 0.1,
-                name: str = f'{test_name}.png',
-                fail_fast: bool = False
+            img: bytes,
+            *,
+            threshold: float = 0.1,
+            name: str = f"{test_name}.png",
+            fail_fast: bool = False,
         ) -> None:
             """Compare the given image against a stored snapshot.
 
@@ -63,24 +59,24 @@ class SnapshotComparatorService:
             pytest.fail
                 If images don't match or new snapshot is created
             """
-            test_file_name = str(Path(request.node.fspath).name).strip('.py')
+            test_file_name = str(Path(request.node.fspath).name).strip(".py")
 
             filepath = (
-                    Path(request.node.fspath).parent.resolve()
-                    / 'snapshots'
-                    / test_file_name
-                    / test_function_name
+                Path(request.node.fspath).parent.resolve()
+                / "snapshots"
+                / test_file_name
+                / test_function_name
             )
             filepath.mkdir(parents=True, exist_ok=True)
             file = filepath / name
 
             # Create a dir where all snapshot test failures will go
-            results_dir_name = (Path(request.node.fspath).parent.resolve()
-                                / "snapshot_tests_failures")
-            test_results_dir = (results_dir_name
-                                / test_file_name
-                                / test_function_name
-                                / test_name)
+            results_dir_name = (
+                Path(request.node.fspath).parent.resolve() / "snapshot_tests_failures"
+            )
+            test_results_dir = (
+                results_dir_name / test_file_name / test_function_name / test_name
+            )
 
             # Remove a single test's past run dir with actual, diff and expected images
             if test_results_dir.exists():
@@ -95,18 +91,14 @@ class SnapshotComparatorService:
             img_diff = Image.new("RGBA", img_a.size)
 
             mismatch = pixelmatch(
-                img_a,
-                img_b,
-                img_diff,
-                threshold=threshold,
-                fail_fast=fail_fast
+                img_a, img_b, img_diff, threshold=threshold, fail_fast=fail_fast
             )
 
             if mismatch > 0:
                 test_results_dir.mkdir(parents=True, exist_ok=True)
-                img_diff.save(f'{test_results_dir}/Diff_{name}')
-                img_a.save(f'{test_results_dir}/Actual_{name}')
-                img_b.save(f'{test_results_dir}/Expected_{name}')
+                img_diff.save(f"{test_results_dir}/Diff_{name}")
+                img_a.save(f"{test_results_dir}/Actual_{name}")
+                img_b.save(f"{test_results_dir}/Expected_{name}")
                 pytest.fail("Snapshots DO NOT match!")
 
         return compare

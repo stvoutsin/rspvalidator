@@ -2,18 +2,17 @@
 
 import datetime
 from pathlib import Path
-from typing import Any, Callable, Generator  # noqa: UP035
+from typing import Any, Generator  # noqa: UP035
 
 import pytest
 import pyvo
 from playwright.sync_api import expect, sync_playwright
 
-from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, SNAPSHOTS, TOKEN, TRACING
+from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
 from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
-from .services.snapshots import SnapshotComparatorService
 from .services.validation import TAPValidationService
 
 # Set default timeout for playwright
