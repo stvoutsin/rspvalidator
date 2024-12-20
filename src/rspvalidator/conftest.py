@@ -2,17 +2,18 @@
 
 import datetime
 from pathlib import Path
-from typing import Any, Generator  # noqa: UP035
+from typing import Any, Callable, Generator  # noqa: UP035
 
 import pytest
 import pyvo
 from playwright.sync_api import expect, sync_playwright
 
-from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, TOKEN, TRACING
+from .config import AUTH_FILE, HEADLESS, SELECTOR_TIMEOUT, SNAPSHOTS, TOKEN, TRACING
 from .constants import STILTS_FILENAME, STILTS_URL
 from .factories.tap_factory import TAPFactory
 from .services.configreader import ConfigReaderService
 from .services.filemanager import FileManagerService
+from .services.snapshots import SnapshotComparatorService
 from .services.validation import TAPValidationService
 
 # Set default timeout for playwright
@@ -108,7 +109,7 @@ def tap_client_tap(auth_token: str) -> pyvo.dal.TAPService:
     return TAPFactory.make_client(auth_token=auth_token, app="tap")
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")  # noqa: PT003
 def page(browser: Any) -> Generator:
     """
     Fixture to create a playwright page object.
@@ -143,7 +144,7 @@ def page(browser: Any) -> Generator:
     context.close()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")  # noqa: PT003
 def page_anonymous(browser: Any) -> Generator:
     """
     Fixture to create a playwright page object.
@@ -165,7 +166,7 @@ def page_anonymous(browser: Any) -> Generator:
     context.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def data_dir() -> Path:
     """
     Fixture to return the data directory path.
@@ -178,7 +179,7 @@ def data_dir() -> Path:
     return Path(__file__).parent / "data"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def queries(data_dir: str, app: str) -> list[dict[str, Any]]:
     """
     Fixture to load queries from a JSON file.
@@ -198,7 +199,7 @@ def queries(data_dir: str, app: str) -> list[dict[str, Any]]:
     return ConfigReaderService.get_queries(data_dir=data_dir, app=app)
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def tap_validation_service_ssotap(
     tap_client_ssotap: pyvo.dal.TAPService,
 ) -> TAPValidationService:
@@ -218,7 +219,7 @@ def tap_validation_service_ssotap(
     return TAPValidationService(tap_client=tap_client_ssotap, app="ssotap")
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def tap_validation_service_tap(
     tap_client_tap: pyvo.dal.TAPService,
 ) -> TAPValidationService:

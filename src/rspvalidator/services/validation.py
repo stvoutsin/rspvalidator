@@ -151,7 +151,6 @@ class SquareOneValidationService:
     def validate_squareone_homepage(self) -> None:
         """Validate the RSP (squareone) homepage."""
         self.page.goto(ConfigReaderService.get_url("squareone"))
-        self.page.goto(BASE_URL)
         expect(self.page.locator("h1")).to_contain_text("Rubin Science Platform")
         expect(self.page.locator("section")).to_contain_text("Portal")
         expect(self.page.locator("section")).to_contain_text("Notebooks")

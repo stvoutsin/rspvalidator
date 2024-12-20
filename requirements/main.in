@@ -17,6 +17,8 @@ jinja2>=2.10
 structlog
 pytest-playwright
 pexpect
+pillow
+pixelmatch
 
 # Uncomment this, change the branch, comment out safir above, and run make
 # update-deps-no-hashes to test against an unreleased version of Safir.
