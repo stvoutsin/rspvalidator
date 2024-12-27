@@ -48,6 +48,11 @@ Then point AUTH_FILE in config.py to the path of the auth.json file generated.
 
 ## Running Tests
 
-To run the tests using `tox`, use the following command:
+To run the tests using `tox` (Only available in HEADLESS mode), use the following command:
 ```sh
 tox
+
+Note: A recently added feature is to compare snapshots taken during a particular test. This is currently enabled for a portal test & a squareone test.
+To enable this part of the test you'll need to set the environment variable SNAPSHOTS = True
+If this is enabled, the first time you run the tests, the snapshots will be generated and stored in a directory in the test directory, but the test will fail with a message indicating this. 
+You'll then have to run the tests a second time to actually test and compare properly
