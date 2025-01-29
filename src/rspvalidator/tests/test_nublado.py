@@ -122,7 +122,7 @@ def test_nublado_dp02_06b_interactive_visualization(page: Page) -> None:
         page.get_by_label(
             "DP02_06b_Interactive_Catalog_Visualization.ipynb"
         ).get_by_label("Cells", exact=True)
-    ).to_contain_text("BokehJS 3.5.2 successfully loaded.")
+    ).to_have_text(re.compile(r"BokehJS .+ successfully loaded\."))
 
     expect(
         page.get_by_label(
