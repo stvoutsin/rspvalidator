@@ -19,8 +19,8 @@ HEADLESS = os.getenv("HEADLESS", "False").lower() == "true"
 SNAPSHOTS = os.getenv("SNAPSHOTS", "False").lower() == "true"
 TOKEN = os.getenv("TOKEN", "")
 SELECTOR_TIMEOUT = 180000
-TRACING = True
-AUTH_FILE = "~/auth.json"
+TRACING = os.getenv("TRACING", "True").lower() == "true"
+AUTH_FILE = os.getenv("AUTH_FILE", "~/auth.json")
 
 try:
     FileManagerService.check_auth_file()
